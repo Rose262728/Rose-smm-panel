@@ -1,0 +1,42 @@
+body {
+    background-color: black;
+    color: gold;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-top: 100px;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+p {
+    font-size: 20px;
+}button {
+    background-color: gold;
+    color: black;
+    border: none;
+    padding: 12px 20px;
+    margin: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: white;}
+.btn {
+    display: inline-block;
+    background: gold;
+    color: black;
+    padding: 15px 30px;
+    margin: 10px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: white;
+}

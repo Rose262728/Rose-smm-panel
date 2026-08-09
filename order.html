@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order - RK Digital</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Place Your Order</h1>
+
+<form>
+    <input type="text" placeholder="Your Name"><br><br>
+
+    <input type="text" placeholder="Facebook/TikTok/YouTube Link"><br><br>
+
+    <select>
+        <option>Facebook Likes</option>
+        <option>Facebook Followers</option>
+        <option>TikTok Views</option>
+        <option>TikTok Likes</option>
+        <option>YouTube Views</option>
+        <option>Instagram Followers</option>
+    </select><br><br>
+
+    <input type="number" placeholder="Quantity"><br><br>
+
+<button type="button" onclick="submitOrder()">Submit Order</button>
+</form>
+
+<br>
+<a href="index.html" class="btn">Back Home</a>
+<script>
+function submitOrder() {
+let name = document.querySelector('input[type="text"]').value;
+let link = document.querySelectorAll('input[type="text"]')[1].value;
+let quantity = document.querySelector('input[type="number"]').value;
+
+if (name == "" || link == "" || quantity == "") {
+    alert("Please fill in all fields.");
+} else {
+    alert("Order Submitted Successfully!");
+}
+}
+</script>
+</body>
+</html>
