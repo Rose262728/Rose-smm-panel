@@ -8,22 +8,30 @@
 <input type="text" id="link" placeholder="Facebook/TikTok/YouTube/Instagram Link">
 <br><br>
 
+<select id="country">
+    <option value="Philippines">🇵🇭 Philippines</option>
+    <option value="India">🇮🇳 India</option>
+</select>
+
+<br><br>
+
 <select id="service">
-<optgroup label="Facebook Profile & Page">
-    <option value="Facebook Like">👍 Like</option>
-    <option value="Facebook Love">❤️ Love</option>
-    <option value="Facebook Care">🥰 Care</option>
-    <option value="Facebook Haha">😂 Haha</option>
-    <option value="Facebook Wow">😮 Wow</option>
-    <option value="Facebook Sad">😢 Sad</option>
-    <option value="Facebook Angry">😡 Angry</option>
-    <option value="Facebook All Reactions">❤️ All Reactions</option>
-    <option value="Facebook Followers">Followers</option>
-    <option value="Facebook Views">Views</option>
-    <option value="Facebook Comments">Comments</option>
-    <option value="Facebook Shares">Shares</option>
-    <option value="Facebook Saves">Saves</option>
-</optgroup>
+
+    <optgroup label="Facebook Profile & Page">
+        <option value="Facebook Like">👍 Like</option>
+        <option value="Facebook Love">❤️ Love</option>
+        <option value="Facebook Care">🥰 Care</option>
+        <option value="Facebook Haha">😂 Haha</option>
+        <option value="Facebook Wow">😮 Wow</option>
+        <option value="Facebook Sad">😢 Sad</option>
+        <option value="Facebook Angry">😡 Angry</option>
+        <option value="Facebook All Reactions">❤️ All Reactions</option>
+        <option value="Facebook Followers">Followers</option>
+        <option value="Facebook Views">Views</option>
+        <option value="Facebook Comments">Comments</option>
+        <option value="Facebook Shares">Shares</option>
+        <option value="Facebook Saves">Saves</option>
+    </optgroup>
 
     <optgroup label="TikTok">
         <option value="TikTok Likes">Likes</option>
@@ -78,10 +86,11 @@ document.getElementById("orderForm").addEventListener("submit", async function(e
 
     const name = document.getElementById("name").value.trim();
     const link = document.getElementById("link").value.trim();
+    const country = document.getElementById("country").value;
     const service = document.getElementById("service").value;
     const quantity = document.getElementById("quantity").value.trim();
 
-    if (!name || !link || !service || !quantity) {
+    if (!name || !link || !country || !service || !quantity) {
         alert("Please fill in all fields.");
         return;
     }
@@ -96,6 +105,7 @@ document.getElementById("orderForm").addEventListener("submit", async function(e
             body: JSON.stringify({
                 name: name,
                 link: link,
+                country: country,
                 service: service,
                 quantity: quantity
             })
