@@ -2,32 +2,78 @@
 <head>
     <title>Order - RK Digital</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<body><h1>Place Your Order</h1><form id="orderForm">
-    <input type="text" id="name" placeholder="Your Name"><br><br><input type="text" id="link" placeholder="Facebook/TikTok/YouTube Link"><br><br>
+</head><body><h1>Place Your Order</h1><form id="orderForm"><input type="text" id="name" placeholder="Your Name">
+<br><br>
+
+<input type="text" id="link" placeholder="Facebook/TikTok/YouTube/Instagram Link">
+<br><br>
 
 <select id="service">
-    <option value="Facebook Likes">Facebook Likes</option>
-    <option value="Facebook Followers">Facebook Followers</option>
-    <option value="TikTok Views">TikTok Views</option>
-    <option value="TikTok Likes">TikTok Likes</option>
-    <option value="YouTube Views">YouTube Views</option>
-    <option value="Instagram Followers">Instagram Followers</option>
-</select><br><br>
 
-<input type="number" id="quantity" placeholder="Quantity"><br><br>
+    <optgroup label="Facebook Profile & Page">
+        <option value="Facebook Likes / All Reactions">Likes / All Reactions</option>
+        <option value="Facebook Followers">Followers</option>
+        <option value="Facebook Views">Views</option>
+        <option value="Facebook Comments">Comments</option>
+        <option value="Facebook Shares">Shares</option>
+        <option value="Facebook Saves">Saves</option>
+    </optgroup>
+
+    <optgroup label="TikTok">
+        <option value="TikTok Likes">Likes</option>
+        <option value="TikTok Followers">Followers</option>
+        <option value="TikTok Views">Views</option>
+        <option value="TikTok Shares">Shares</option>
+        <option value="TikTok Comments">Comments</option>
+        <option value="TikTok Saves">Saves</option>
+    </optgroup>
+
+    <optgroup label="Telegram">
+        <option value="Telegram Members">Members</option>
+        <option value="Telegram Reactions">Reactions</option>
+        <option value="Telegram Views">Views</option>
+        <option value="Telegram Shares">Shares</option>
+        <option value="Telegram Comments">Comments</option>
+    </optgroup>
+
+    <optgroup label="YouTube">
+        <option value="YouTube Subscribers">Subscribers</option>
+        <option value="YouTube Likes">Likes</option>
+        <option value="YouTube Views">Views</option>
+        <option value="YouTube Comments">Comments</option>
+        <option value="YouTube Shares">Shares</option>
+    </optgroup>
+
+    <optgroup label="Instagram">
+        <option value="Instagram Followers">Followers</option>
+        <option value="Instagram Likes">Likes</option>
+        <option value="Instagram Views">Views</option>
+        <option value="Instagram Comments">Comments</option>
+        <option value="Instagram Shares">Shares</option>
+        <option value="Instagram Saves">Saves</option>
+    </optgroup>
+
+</select>
+
+<br><br>
+
+<input type="number" id="quantity" placeholder="Quantity">
+
+<br><br>
 
 <button type="submit">Submit Order</button>
 
-</form><br>
-<a href="index.html" class="btn">Back Home</a><script>
+</form><br><a href="index.html" class="btn">Back Home</a>
+
+<script>
 document.getElementById("orderForm").addEventListener("submit", async function(event) {
+
     event.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const link = document.getElementById("link").value;
+    const name = document.getElementById("name").value.trim();
+    const link = document.getElementById("link").value.trim();
     const service = document.getElementById("service").value;
-    const quantity = document.getElementById("quantity").value;
+    const quantity = document.getElementById("quantity").value.trim();
 
     if (!name || !link || !service || !quantity) {
         alert("Please fill in all fields.");
@@ -35,6 +81,7 @@ document.getElementById("orderForm").addEventListener("submit", async function(e
     }
 
     try {
+
         const response = await fetch("/api/order", {
             method: "POST",
             headers: {
@@ -51,15 +98,23 @@ document.getElementById("orderForm").addEventListener("submit", async function(e
         const data = await response.json();
 
         if (response.ok) {
+
             alert("Order submitted successfully!");
+
             document.getElementById("orderForm").reset();
+
         } else {
+
             alert("Order failed: " + (data.error || "Unknown error"));
+
         }
 
     } catch (error) {
+
         alert("Connection error. Please try again.");
+
     }
+
 });
 </script></body>
 </html>
