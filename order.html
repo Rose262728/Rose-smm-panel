@@ -1,46 +1,65 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
     <title>Order - RK Digital</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body><h1>Place Your Order</h1><form id="orderForm">
+    <input type="text" id="name" placeholder="Your Name"><br><br><input type="text" id="link" placeholder="Facebook/TikTok/YouTube Link"><br><br>
 
-<h1>Place Your Order</h1>
+<select id="service">
+    <option value="Facebook Likes">Facebook Likes</option>
+    <option value="Facebook Followers">Facebook Followers</option>
+    <option value="TikTok Views">TikTok Views</option>
+    <option value="TikTok Likes">TikTok Likes</option>
+    <option value="YouTube Views">YouTube Views</option>
+    <option value="Instagram Followers">Instagram Followers</option>
+</select><br><br>
 
-<form>
-    <input type="text" placeholder="Your Name"><br><br>
+<input type="number" id="quantity" placeholder="Quantity"><br><br>
 
-    <input type="text" placeholder="Facebook/TikTok/YouTube Link"><br><br>
+<button type="submit">Submit Order</button>
 
-    <select>
-        <option>Facebook Likes</option>
-        <option>Facebook Followers</option>
-        <option>TikTok Views</option>
-        <option>TikTok Likes</option>
-        <option>YouTube Views</option>
-        <option>Instagram Followers</option>
-    </select><br><br>
+</form><br>
+<a href="index.html" class="btn">Back Home</a><script>
+document.getElementById("orderForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
 
-    <input type="number" placeholder="Quantity"><br><br>
+    const name = document.getElementById("name").value;
+    const link = document.getElementById("link").value;
+    const service = document.getElementById("service").value;
+    const quantity = document.getElementById("quantity").value;
 
-<button type="button" onclick="submitOrder()">Submit Order</button>
-</form>
+    if (!name || !link || !service || !quantity) {
+        alert("Please fill in all fields.");
+        return;
+    }
 
-<br>
-<a href="index.html" class="btn">Back Home</a>
-<script>
-function submitOrder() {
-let name = document.querySelector('input[type="text"]').value;
-let link = document.querySelectorAll('input[type="text"]')[1].value;
-let quantity = document.querySelector('input[type="number"]').value;
+    try {
+        const response = await fetch("/api/order", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                link: link,
+                service: service,
+                quantity: quantity
+            })
+        });
 
-if (name == "" || link == "" || quantity == "") {
-    alert("Please fill in all fields.");
-} else {
-    alert("Order Submitted Successfully!");
-}
-}
-</script>
-</body>
+        const data = await response.json();
+
+        if (response.ok) {
+            alert("Order submitted successfully!");
+            document.getElementById("orderForm").reset();
+        } else {
+            alert("Order failed: " + (data.error || "Unknown error"));
+        }
+
+    } catch (error) {
+        alert("Connection error. Please try again.");
+    }
+});
+</script></body>
 </html>
