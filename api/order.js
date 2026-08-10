@@ -1,14 +1,20 @@
 export default async function handler(req, res) { if (req.method !== "POST") { return res.status(405).json({ error: "Method not allowed" }); }
 try { const { name, link, service, quantity } = req.body;
 if (!name || !link || !service || !quantity) {
-  return res.status(400).json({ error: "Missing order information" });
+  return res.status(400).json({
+    error: "Missing order information"
+  });
 }
 
-const orderId = "RK-" + Date.now().toString().slice(-6);
+const orderId =
+  "RK-" + Date.now().toString().slice(-6);
+
+const status = "Pending";
 
 const message =
   `📩 New RK Digital Order\n\n` +
   `🆔 Order ID: ${orderId}\n` +
+  `📊 Status: ${status}\n` +
   `👤 Name: ${name}\n` +
   `🔗 Link: ${link}\n` +
   `📌 Service: ${service}\n` +
@@ -36,6 +42,7 @@ if (!response.ok) {
 
 return res.status(200).json({
   success: true,
-  orderId: orderId
+  orderId: orderId,
+  status: status
 });
 } catch (error) { return res.status(500).json({ error: "Server error" }); } }
