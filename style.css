@@ -1,70 +1,95 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background-color: black;
     color: gold;
     font-family: Arial, sans-serif;
     text-align: center;
-    padding-top: 100px;
+    margin: 0;
+    padding: 70px 20px;
+    min-height: 100vh;
 }
 
 h1 {
-    font-size: 40px;
+    font-size: 42px;
+    margin-bottom: 30px;
 }
 
 p {
-    font-size: 20px;
+    font-size: 21px;
+    line-height: 1.5;
 }
 
-button {
+input,
+select {
+    width: 90%;
+    max-width: 500px;
+    padding: 17px;
+    margin: 10px auto;
+    font-size: 19px;
+    border: 2px solid gold;
+    border-radius: 10px;
+    display: block;
+    text-align: center;
+}
+
+button,
+.btn {
+    display: inline-block;
+    width: 90%;
+    max-width: 350px;
+    padding: 17px 25px;
+    margin: 15px auto;
+    font-size: 20px;
+    font-weight: bold;
     background-color: gold;
     color: black;
     border: none;
-    padding: 12px 20px;
-    margin: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 8px;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-button:hover {
+button:hover,
+.btn:hover {
     background-color: white;
 }
 
-.btn {
-    display: inline-block;
-    background: gold;
-    color: black;
-    padding: 15px 30px;
-    margin: 10px;
-    text-decoration: none;
-    border-radius: 10px;
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.btn:hover {
-    background: white;
+#result {
+    font-size: 20px;
+    margin: 25px auto;
+    max-width: 500px;
 }
 
 @media (max-width: 600px) {
+
     body {
-        padding-top: 50px;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding: 50px 15px;
     }
 
     h1 {
-        font-size: 30px;
+        font-size: 32px;
+        margin-bottom: 25px;
     }
 
     p {
         font-size: 18px;
     }
 
+    input,
+    select {
+        width: 95%;
+        font-size: 18px;
+        padding: 16px;
+    }
+
     button,
     .btn {
-        font-size: 18px;
-        padding: 12px 20px;
-        width: 80%;
-        max-width: 300px;
+        width: 95%;
+        max-width: 360px;
+        font-size: 19px;
+        padding: 16px;
     }
 }
