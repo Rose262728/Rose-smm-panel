@@ -1,136 +1,250 @@
-<!DOCTYPE html><html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <title>Order - RK Digital</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ROSE SMM PANEL - Order</title>
+
     <link rel="stylesheet" href="style.css">
-</head><body><h1>Place Your Order</h1><form id="orderForm"><input type="text" id="name" placeholder="Your Name">
-<br><br>
 
-<input type="text" id="link" placeholder="Facebook/TikTok/YouTube/Instagram Link">
-<br><br>
-
-<select id="country">
-    <option value="Philippines">🇵🇭 Philippines</option>
-    <option value="India">🇮🇳 India</option>
-</select>
-
-<br><br>
-
-<select id="service">
-
-    <optgroup label="Facebook Profile & Page">
-        <option value="Facebook Like">👍 Like</option>
-        <option value="Facebook Love">❤️ Love</option>
-        <option value="Facebook Care">🥰 Care</option>
-        <option value="Facebook Haha">😂 Haha</option>
-        <option value="Facebook Wow">😮 Wow</option>
-        <option value="Facebook Sad">😢 Sad</option>
-        <option value="Facebook Angry">😡 Angry</option>
-        <option value="Facebook All Reactions">❤️ All Reactions</option>
-        <option value="Facebook Followers">Followers</option>
-        <option value="Facebook Views">Views</option>
-        <option value="Facebook Comments">Comments</option>
-        <option value="Facebook Shares">Shares</option>
-        <option value="Facebook Saves">Saves</option>
-    </optgroup>
-
-    <optgroup label="TikTok">
-        <option value="TikTok Likes">Likes</option>
-        <option value="TikTok Followers">Followers</option>
-        <option value="TikTok Views">Views</option>
-        <option value="TikTok Shares">Shares</option>
-        <option value="TikTok Comments">Comments</option>
-        <option value="TikTok Saves">Saves</option>
-    </optgroup>
-
-    <optgroup label="Telegram">
-        <option value="Telegram Members">Members</option>
-        <option value="Telegram Reactions">Reactions</option>
-        <option value="Telegram Views">Views</option>
-        <option value="Telegram Shares">Shares</option>
-        <option value="Telegram Comments">Comments</option>
-    </optgroup>
-
-    <optgroup label="YouTube">
-        <option value="YouTube Subscribers">Subscribers</option>
-        <option value="YouTube Likes">Likes</option>
-        <option value="YouTube Views">Views</option>
-        <option value="YouTube Comments">Comments</option>
-        <option value="YouTube Shares">Shares</option>
-    </optgroup>
-
-    <optgroup label="Instagram">
-        <option value="Instagram Followers">Followers</option>
-        <option value="Instagram Likes">Likes</option>
-        <option value="Instagram Views">Views</option>
-        <option value="Instagram Comments">Comments</option>
-        <option value="Instagram Shares">Shares</option>
-        <option value="Instagram Saves">Saves</option>
-    </optgroup>
-
-</select>
-
-<br><br>
-
-<input type="number" id="quantity" placeholder="Quantity">
-
-<br><br>
-
-<button type="submit">Submit Order</button>
-
-</form><br><a href="index.html" class="btn">Back Home</a>
-
-<script>
-document.getElementById("orderForm").addEventListener("submit", async function(event) {
-
-    event.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const link = document.getElementById("link").value.trim();
-    const country = document.getElementById("country").value;
-    const service = document.getElementById("service").value;
-    const quantity = document.getElementById("quantity").value.trim();
-
-    if (!name || !link || !country || !service || !quantity) {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    try {
-
-        const response = await fetch("/api/order", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name: name,
-                link: link,
-                country: country,
-                service: service,
-                quantity: quantity
-            })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-
-            alert("Order submitted successfully!");
-
-            document.getElementById("orderForm").reset();
-
-        } else {
-
-            alert("Order failed: " + (data.error || "Unknown error"));
-
+    <style>
+        body {
+            background: black;
+            color: gold;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px 15px;
+            margin: 0;
         }
 
-    } catch (error) {
+        h1 {
+            font-size: 42px;
+            margin-bottom: 35px;
+        }
 
-        alert("Connection error. Please try again.");
+        #orderForm {
+            width: 100%;
+            max-width: 650px;
+            margin: auto;
+        }
 
-    }
+        input,
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
+            margin: 10px 0;
+            font-size: 20px;
+            border-radius: 12px;
+            border: 2px solid gold;
+            text-align: center;
+            background: white;
+            color: #222;
+        }
 
-});
-</script></body>
+        button,
+        .btn {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+            padding: 18px;
+            margin: 20px auto;
+            font-size: 21px;
+            font-weight: bold;
+            border-radius: 12px;
+            border: none;
+            background: gold;
+            color: black;
+            text-decoration: none;
+        }
+
+        button:hover,
+        .btn:hover {
+            background: white;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 35px 15px;
+            }
+
+            h1 {
+                font-size: 34px;
+            }
+
+            input,
+            select {
+                font-size: 18px;
+                padding: 18px;
+            }
+
+            button,
+            .btn {
+                font-size: 19px;
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>ROSE SMM PANEL</h1>
+
+    <h2>Place Your Order</h2>
+
+    <form id="orderForm">
+
+        <input
+            type="text"
+            id="name"
+            placeholder="Your Name"
+            required
+        >
+
+        <input
+            type="text"
+            id="link"
+            placeholder="Facebook/TikTok/YouTube/Instagram Link"
+            required
+        >
+
+        <select id="country" required>
+            <option value="Philippines">🇵🇭 Philippines</option>
+            <option value="India">🇮🇳 India</option>
+        </select>
+
+        <select id="service" required>
+
+            <optgroup label="Facebook Profile & Page">
+                <option value="Facebook Like">👍 Like</option>
+                <option value="Facebook Love">❤️ Love</option>
+                <option value="Facebook Care">🥰 Care</option>
+                <option value="Facebook Haha">😂 Haha</option>
+                <option value="Facebook Wow">😮 Wow</option>
+                <option value="Facebook Sad">😢 Sad</option>
+                <option value="Facebook Angry">😡 Angry</option>
+                <option value="Facebook All Reactions">❤️ All Reactions</option>
+                <option value="Facebook Followers">Followers</option>
+                <option value="Facebook Views">Views</option>
+                <option value="Facebook Comments">Comments</option>
+                <option value="Facebook Shares">Shares</option>
+                <option value="Facebook Saves">Saves</option>
+            </optgroup>
+
+            <optgroup label="TikTok">
+                <option value="TikTok Likes">Likes</option>
+                <option value="TikTok Followers">Followers</option>
+                <option value="TikTok Views">Views</option>
+                <option value="TikTok Shares">Shares</option>
+                <option value="TikTok Comments">Comments</option>
+                <option value="TikTok Saves">Saves</option>
+            </optgroup>
+
+            <optgroup label="Telegram">
+                <option value="Telegram Members">Members</option>
+                <option value="Telegram Reactions">Reactions</option>
+                <option value="Telegram Views">Views</option>
+                <option value="Telegram Shares">Shares</option>
+                <option value="Telegram Comments">Comments</option>
+            </optgroup>
+
+            <optgroup label="YouTube">
+                <option value="YouTube Subscribers">Subscribers</option>
+                <option value="YouTube Likes">Likes</option>
+                <option value="YouTube Views">Views</option>
+                <option value="YouTube Comments">Comments</option>
+                <option value="YouTube Shares">Shares</option>
+            </optgroup>
+
+            <optgroup label="Instagram">
+                <option value="Instagram Followers">Followers</option>
+                <option value="Instagram Likes">Likes</option>
+                <option value="Instagram Views">Views</option>
+                <option value="Instagram Comments">Comments</option>
+                <option value="Instagram Shares">Shares</option>
+                <option value="Instagram Saves">Saves</option>
+            </optgroup>
+
+        </select>
+
+        <input
+            type="number"
+            id="quantity"
+            placeholder="Quantity"
+            min="1"
+            required
+        >
+
+        <button type="submit">Submit Order</button>
+
+    </form>
+
+    <a href="index.html" class="btn">Back Home</a>
+
+    <script>
+        document.getElementById("orderForm").addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const link = document.getElementById("link").value.trim();
+            const country = document.getElementById("country").value;
+            const service = document.getElementById("service").value;
+            const quantity = document.getElementById("quantity").value.trim();
+
+            if (!name || !link || !country || !service || !quantity) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            try {
+
+                const response = await fetch("/api/order", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        link: link,
+                        country: country,
+                        service: service,
+                        quantity: quantity
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+
+                    alert(
+                        "Order submitted successfully!\n\n" +
+                        "Order ID: " + data.orderId
+                    );
+
+                    document.getElementById("orderForm").reset();
+
+                } else {
+
+                    alert(
+                        "Order failed: " +
+                        (data.error || "Unknown error")
+                    );
+
+                }
+
+            } catch (error) {
+
+                alert("Connection error. Please try again.");
+
+            }
+
+        });
+    </script>
+
+</body>
 </html>
