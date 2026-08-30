@@ -1,12 +1,8 @@
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({
-      success: false,
-      error: "Method not allowed"
-    });
-  }
-
-  const { service, quantity, link } = req.body || {};
+  const { service, quantity, link } =
+    req.method === "GET"
+      ? req.query || {}
+      : req.body || {};
 
   if (!service || !quantity || !link) {
     return res.status(400).json({
