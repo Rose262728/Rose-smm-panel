@@ -120,53 +120,53 @@
         <select id="service" required>
 
             <optgroup label="Facebook Profile & Page">
-                <option value="Facebook Like">👍 Like</option>
-                <option value="Facebook Love">❤️ Love</option>
-                <option value="Facebook Care">🥰 Care</option>
-                <option value="Facebook Haha">😂 Haha</option>
-                <option value="Facebook Wow">😮 Wow</option>
-                <option value="Facebook Sad">😢 Sad</option>
-                <option value="Facebook Angry">😡 Angry</option>
-                <option value="Facebook All Reactions">❤️ All Reactions</option>
-                <option value="Facebook Followers">Followers</option>
-                <option value="Facebook Views">Views</option>
-                <option value="Facebook Comments">Comments</option>
-                <option value="Facebook Shares">Shares</option>
-                <option value="Facebook Saves">Saves</option>
+                <option value="1">👍 Like</option>
+                <option value="2">❤️ Love</option>
+                <option value="3">🥰 Care</option>
+                <option value="4">😂 Haha</option>
+                <option value="5">😮 Wow</option>
+                <option value="6">😢 Sad</option>
+                <option value="7">😡 Angry</option>
+                <option value="8">❤️ All Reactions</option>
+                <option value="9">Followers</option>
+                <option value="10">Views</option>
+                <option value="11">Comments</option>
+                <option value="12">Shares</option>
+                <option value="13">Saves</option>
             </optgroup>
 
             <optgroup label="TikTok">
-                <option value="TikTok Likes">Likes</option>
-                <option value="TikTok Followers">Followers</option>
-                <option value="TikTok Views">Views</option>
-                <option value="TikTok Shares">Shares</option>
-                <option value="TikTok Comments">Comments</option>
-                <option value="TikTok Saves">Saves</option>
+                <option value="14">Likes</option>
+                <option value="15">Followers</option>
+                <option value="16">Views</option>
+                <option value="17">Shares</option>
+                <option value="18">Comments</option>
+                <option value="19">Saves</option>
             </optgroup>
 
             <optgroup label="Telegram">
-                <option value="Telegram Members">Members</option>
-                <option value="Telegram Reactions">Reactions</option>
-                <option value="Telegram Views">Views</option>
-                <option value="Telegram Shares">Shares</option>
-                <option value="Telegram Comments">Comments</option>
+                <option value="20">Members</option>
+                <option value="21">Reactions</option>
+                <option value="22">Views</option>
+                <option value="23">Shares</option>
+                <option value="24">Comments</option>
             </optgroup>
 
             <optgroup label="YouTube">
-                <option value="YouTube Subscribers">Subscribers</option>
-                <option value="YouTube Likes">Likes</option>
-                <option value="YouTube Views">Views</option>
-                <option value="YouTube Comments">Comments</option>
-                <option value="YouTube Shares">Shares</option>
+                <option value="25">Subscribers</option>
+                <option value="26">Likes</option>
+                <option value="27">Views</option>
+                <option value="28">Comments</option>
+                <option value="29">Shares</option>
             </optgroup>
 
             <optgroup label="Instagram">
-                <option value="Instagram Followers">Followers</option>
-                <option value="Instagram Likes">Likes</option>
-                <option value="Instagram Views">Views</option>
-                <option value="Instagram Comments">Comments</option>
-                <option value="Instagram Shares">Shares</option>
-                <option value="Instagram Saves">Saves</option>
+                <option value="30">Followers</option>
+                <option value="31">Likes</option>
+                <option value="32">Views</option>
+                <option value="33">Comments</option>
+                <option value="34">Shares</option>
+                <option value="35">Saves</option>
             </optgroup>
 
         </select>
@@ -179,6 +179,20 @@
             required
         >
 
+        <input
+            type="number"
+            id="runs"
+            placeholder="Drip: Ilang beses hahatiin? (opsyonal)"
+            min="1"
+        >
+
+        <input
+            type="number"
+            id="interval"
+            placeholder="Drip: Pagitan sa bawat oras (opsyonal)"
+            min="1"
+        >
+
         <button type="submit">Submit Order</button>
 
     </form>
@@ -186,8 +200,11 @@
     <a href="index.html" class="btn">Back Home</a>
 
     <script>
-        document.getElementById("orderForm").addEventListener("submit", async function(event) {
+        // ⚠️ PALITAN ITO NG TOTOONG DETALYE MULA SA SUPPLIER MO:
+        const API_URL = "https://smmwiz.com/api/v2";
+        const API_KEY = "ILAGAY-ANG-API-KEY-MO-DITO";
 
+        document.getElementById("orderForm").addEventListener("submit", async function(event) {
             event.preventDefault();
 
             const name = document.getElementById("name").value.trim();
@@ -195,54 +212,52 @@
             const country = document.getElementById("country").value;
             const service = document.getElementById("service").value;
             const quantity = document.getElementById("quantity").value.trim();
+            const runs = document.getElementById("runs").value;
+            const interval = document.getElementById("interval").value;
 
             if (!name || !link || !country || !service || !quantity) {
-                alert("Please fill in all fields.");
+                alert("Punan lahat ng detalye!");
                 return;
             }
 
             try {
+                let apiBody = {
+                    key: API_KEY,
+                    action: "add",
+                    service: service,
+                    link: link,
+                    quantity: quantity
+                };
 
-                const response = await fetch("/api/order", {
+                // Kung may Drip-Feed na ilagay
+                if (runs && interval) {
+                    apiBody.runs = runs;
+                    apiBody.interval = interval;
+                }
+
+                const response = await fetch(API_URL, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        name: name,
-                        link: link,
-                        country: country,
-                        service: service,
-                        quantity: quantity
-                    })
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(apiBody)
                 });
 
                 const data = await response.json();
 
-                if (response.ok) {
-
+                if (data.order) {
                     alert(
-                        "Order submitted successfully!\n\n" +
-                        "Order ID: " + data.orderId
+                        "✅ Order naitala!\n\n" +
+                        "Order ID: " + data.order + "\n" +
+                        "Salamat, " + name + "!"
                     );
-
                     document.getElementById("orderForm").reset();
-
                 } else {
-
-                    alert(
-                        "Order failed: " +
-                        (data.error || "Unknown error")
-                    );
-
+                    alert("❌ Error: " + (data.error || "Hindi matagumpay ang order"));
                 }
 
             } catch (error) {
-
-                alert("Connection error. Please try again.");
-
+                alert("⚠️ May problema sa koneksyon. Tingnan mo ang API URL at Key.");
+                console.error(error);
             }
-
         });
     </script>
 
