@@ -186,11 +186,8 @@
     <a href="index.html" class="btn">Back Home</a>
 
     <script>
-        // ⚠️ ILAGAY ANG DETALYE NG TELEGRAM MO DITO ⚠️
-        const TELEGRAM_BOT_TOKEN = "ILAGAY-ANG-BOT-TOKEN-MO-DITO";
-        const TELEGRAM_CHAT_ID = "ILAGAY-ANG-CHAT-ID-MO-DITO";
-
         document.getElementById("orderForm").addEventListener("submit", async function(event) {
+
             event.preventDefault();
 
             const name = document.getElementById("name").value.trim();
@@ -200,44 +197,52 @@
             const quantity = document.getElementById("quantity").value.trim();
 
             if (!name || !link || !country || !service || !quantity) {
-                alert("Punan lahat ng detalye!");
+                alert("Please fill in all fields.");
                 return;
             }
 
-            // Bumuo ng mensahe na ipapadala sa Telegram
-            const message = 
-                "📩 BAGONG ORDER!\n\n" +
-                "👤 Pangalan: " + name + "\n" +
-                "🔗 Link: " + link + "\n" +
-                "🌍 Bansa: " + country + "\n" +
-                "🛒 Serbisyo: " + service + "\n" +
-                "🔢 Dami: " + quantity;
-
             try {
-                // Ipadala sa Telegram
-                const response = await fetch(
-                    "https://api.telegram.org/bot" + TELEGRAM_BOT_TOKEN + "/sendMessage",
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_CHAT_ID,
-                            text: message
-                        })
-                    }
-                );
+
+                const response = await fetch("/api/order", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        link: link,
+                        country: country,
+                        service: service,
+                        quantity: quantity
+                    })
+                });
+
+                const data = await response.json();
 
                 if (response.ok) {
-                    alert("✅ Order naipadala na! Makikita mo sa Telegram!");
+
+                    alert(
+                        "Order submitted successfully!\n\n" +
+                        "Order ID: " + data.orderId
+                    );
+
                     document.getElementById("orderForm").reset();
+
                 } else {
-                    alert("❌ May problema sa pagpapadala. Tingnan mo ang Token at Chat ID.");
+
+                    alert(
+                        "Order failed: " +
+                        (data.error || "Unknown error")
+                    );
+
                 }
 
             } catch (error) {
-                alert("⚠️ Hindi makapagpadala. Tingnan mo ang koneksyon o ang Telegram details.");
-                console.error(error);
+
+                alert("Connection error. Please try again.");
+
             }
+
         });
     </script>
 
