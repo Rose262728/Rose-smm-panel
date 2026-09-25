@@ -485,6 +485,84 @@ window.onload = function() {
     renderMembers();
 };
 </script>
+<section id="my-own-system" style="margin-top: 40px; padding: 25px; background: #1a1a1a; border-radius: 15px; border: 2px solid gold;">
+    <h2 style="color: gold; text-align: center;">🤖 SARILING SISTEMA — IKAW ANG NAGPAPATAKBO</h2>
+    <p style="color: #fff; text-align: center; font-size: 14px;">Tandaan: Dahan-dahan lang, huwag biglaan — para hindi mahalata ✅</p>
+
+    <div style="margin-top: 20px;">
+        <h3 style="color: gold;">🎯 Ilagay ang Post</h3>
+        <input type="url" id="target-post-link" placeholder="Link ng post/video mo..." style="width: 90%; padding: 12px; margin: 8px 0; border-radius: 8px; border: none;">
+        
+        <h4 style="color: gold; margin: 15px 0 5px 0;">Uri ng Gagawin:</h4>
+        <select id="action-type" style="width: 90%; padding: 10px; border-radius: 6px; border: none;">
+            <option value="view">👁️ Panood/Tingnan</option>
+            <option value="like">👍 I-like</option>
+            <option value="react">❤️ Magbigay Reaksyon</option>
+            <option value="share">🔄 Ibahagi</option>
+        </select>
+        
+        <h4 style="color: gold; margin: 15px 0 5px 0;">Bilang ng Gagawin:</h4>
+        <input type="number" id="target-count" min="1" max="50" placeholder="Hal: 5, 10, 20 (huwag sobra)" style="width: 90%; padding: 10px; margin: 8px 0; border-radius: 6px; border: none;">
+        
+        <button onclick="prepareActions()" style="background: gold; color: #000; padding: 12px 30px; border: none; border-radius: 8px; font-size: 17px; font-weight: bold; margin-top: 10px; cursor: pointer;">✅ Ihanda ang Gagawin</button>
+    </div>
+
+    <div id="action-list" style="margin-top: 25px; display: none;">
+        <h3 style="color: gold;">📋 Listahan ng Gagawin</h3>
+        <p style="color: limegreen;">Buksan ang link isa-isa — maghintay ng ilang segundo sa bawat isa ⏱️</p>
+        <div id="generated-list" style="margin-top: 15px;"></div>
+    </div>
+
+    <div style="margin-top: 25px; padding: 15px; background: #2a2a00; border-radius: 8px;">
+        <h4 style="color: gold; margin: 0 0 10px 0;">⚠️ PAALALA SA KALIGTASAN:</h4>
+        <ul style="color: #fff; font-size: 13px; margin: 0; padding-left: 20px;">
+            <li>Huwag biglaan — 5-10 lang muna bawat araw ✅</li>
+            <li>Maghintay ng 1-3 minuto sa pagitan ng bawat isa ⏱️</li>
+            <li>Huwag gumamit ng maraming account sabay-sabay ❌</li>
+            <li>Gamitin lang ang sarili mong mga account na kilala mo ✅</li>
+        </ul>
+    </div>
+</section>
+
+<script>
+function prepareActions() {
+    const link = document.getElementById('target-post-link').value;
+    const type = document.getElementById('action-type').value;
+    const count = parseInt(document.getElementById('target-count').value);
+
+    if (!link || !count) {
+        alert('❌ Punan ang link at bilang!');
+        return;
+    }
+    if (count > 50) {
+        alert('⚠️ Mas mainam sa 50 pababa lang para ligtas!');
+        return;
+    }
+
+    const listDiv = document.getElementById('action-list');
+    const genDiv = document.getElementById('generated-list');
+    
+    let actionName = {
+        'view': 'Tingnan/Panoorin',
+        'like': 'I-like',
+        'react': 'Magbigay Reaksyon',
+        'share': 'Ibahagi'
+    }[type];
+
+    genDiv.innerHTML = '';
+    for (let i = 1; i <= count; i++) {
+        genDiv.innerHTML += `
+            <div style="padding: 10px; margin: 5px 0; background: #333; border-radius: 6px;">
+                <strong style="color: gold;">${i}.</strong> 
+                <a href="${link}" target="_blank" style="color: #87CEEB;">Buksan ang Link</a> → 
+                <span style="color: limegreen;">${actionName}</span>
+            </div>
+        `;
+    }
+
+    listDiv.style.display = 'block';
+}
+</script>
 
 </body>
 </html>
