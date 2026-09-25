@@ -3,61 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>ROSE SMM PANEL</title>
-
-    <meta name="description" content="ROSE SMM PANEL">
-
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #000; color: #FFD700; text-align: center; padding: 20px; min-height: 100vh; }
+        
+        nav { margin: 20px 0; }
+        nav a { color: #FFD700; margin: 0 10px; text-decoration: none; font-size: 16px; }
+        nav a:hover { text-decoration: underline; }
+        
+        h1 { font-size: 42px; margin: 30px 0 10px; }
+        .subtitle { font-size: 18px; margin-bottom: 40px; color: #FFF; }
+        
+        .btn {
+            display: block;
+            width: 90%;
+            max-width: 400px;
+            margin: 15px auto;
+            padding: 18px;
+            background: #FFD700;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover { background: #FFF; }
+        
+        .section { margin: 40px 0; }
+        .section h2 { margin-bottom: 20px; color: #FFF; }
+        .section ul { list-style: none; font-size: 18px; line-height: 2; }
+        
+        .settings-box {
+            background: #111;
+            border: 2px solid #FFD700;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 500px;
+            margin: 30px auto;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: #222;
+            border: 1px solid #FFD700;
+            color: #FFF;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        label { display: block; text-align: left; margin-top: 12px; }
+        .save-btn { background: #00b14f; color: #fff; margin-top: 15px; }
+        .connected { color: #0f0; margin-top: 15px; display: none; }
+    </style>
 </head>
-
 <body>
 
+    <h1>ROSE SMM PANEL</h1>
+    <p class="subtitle">Fast • Secure • Reliable</p>
+
     <nav>
-        <a href="index.html">Home</a>
-        <a href="#services">Services</a>
-        <a href="order.html">Order</a>
+        <a href="#home">Home</a> |
+        <a href="#services">Services</a> |
+        <a href="#settings">Settings</a> |
+        <a href="order.html">Order Now</a> |
         <a href="status.html">Order Status</a>
     </nav>
 
-    <main>
+    <!-- HOME -->
+    <div id="home" class="section">
+        <h2>Welcome</h2>
+        <a href="#services" class="btn">View Services</a>
+        <a href="#settings" class="btn">Connect Meta API</a>
+    </div>
 
-        <h1>ROSE SMM PANEL</h1>
+    <!-- SERVICES -->
+    <div id="services" class="section">
+        <h2>Our Services</h2>
+        <ul>
+            <li>👍 Facebook Likes & Reactions</li>
+            <li>👤 Facebook Followers</li>
+            <li>📺 TikTok Views & Likes</li>
+            <li>▶️ YouTube Views</li>
+            <li>❤️ Instagram Followers</li>
+            <li>💬 Comments & Shares</li>
+        </ul>
+        <a href="order.html" class="btn">Order Now</a>
+    </div>
 
-        <p>Fast • Secure • Reliable</p>
+    <!-- SETTINGS - DITO ILALAGAY ANG KODIGO MO -->
+    <div id="settings" class="settings-box">
+        <h2>🔗 Meta API Settings</h2>
+        <p style="color:#aaa; margin-bottom:15px;">Ilagay ang impormasyon galing sa Meta Developers</p>
+        
+        <label>App ID:</label>
+        <input type="text" id="appId" placeholder="Ilagay ang App ID" value="1405759197618789">
+        
+        <label>App Secret:</label>
+        <input type="password" id="appSecret" placeholder="Ilagay ang App Secret">
+        
+        <label>Callback URL:</label>
+        <input type="text" id="callbackUrl" value="https://rose-smm-panel.vercel.app/callback">
+        
+        <button class="btn save-btn" onclick="saveSettings()">💾 Save Settings</button>
+        <p class="connected" id="successMsg">✅ Naka-save na! Handa nang kumonekta!</p>
+    </div>
 
-        <section id="services">
+    <script>
+        // I-load ang nakasave na impormasyon
+        window.onload = function() {
+            if(localStorage.getItem('appId')) {
+                document.getElementById('appId').value = localStorage.getItem('appId');
+            }
+            if(localStorage.getItem('appSecret')) {
+                document.getElementById('appSecret').value = localStorage.getItem('appSecret');
+                document.getElementById('successMsg').style.display = 'block';
+            }
+        };
 
-            <h2>Our Services</h2>
+        // I-save ang settings
+        function saveSettings() {
+            const appId = document.getElementById('appId').value;
+            const appSecret = document.getElementById('appSecret').value;
+            const callbackUrl = document.getElementById('callbackUrl').value;
 
-            <ul>
-                <li>Facebook Likes</li>
-                <li>Facebook Followers</li>
-                <li>TikTok Views</li>
-                <li>TikTok Likes</li>
-                <li>YouTube Views</li>
-                <li>Instagram Followers</li>
-            </ul>
+            if(!appId || !appSecret) {
+                alert('Punan muna ang App ID at App Secret!');
+                return;
+            }
 
-        </section>
-
-        <div class="buttons">
-
-            <a href="order.html" class="btn">
-                Order Now
-            </a>
-
-            <a href="#services" class="btn">
-                View Services
-            </a>
-
-            <a href="status.html" class="btn">
-                Check Order Status
-            </a>
-
-        </div>
-
-    </main>
+            localStorage.setItem('appId', appId);
+            localStorage.setItem('appSecret', appSecret);
+            localStorage.setItem('callbackUrl', callbackUrl);
+            
+            document.getElementById('successMsg').style.display = 'block';
+            alert('✅ Naka-save na! Tapos na!');
+        }
+    </script>
 
 </body>
 </html>
