@@ -70,70 +70,7 @@ function sendToMyAPI() {
     if (!link || !qty) {
         alert('❌ Punan ang lahat ng kinakailangan!');
         return;
-    }
-
-    // SARILING API — TAYO ANG MAGTATALA
-    const request = {
-        api_key: key,
-        action: 'create',
-        service: type,
-        link: link,
-        quantity: qty,
-        time: new Date().toLocaleString('fil-PH'),
-        status: 'Naghihintay — Ikaw ang magpapatupad ✅'
-    };
-
-    // I-TALA SA SARILING LISTAHAN
-    let list = JSON.parse(localStorage.getItem('myAPIRecords') || '[]');
-    list.unshift(request);
-    localStorage.setItem('myAPIRecords', JSON.stringify(list));
-
-    // IPAKITA ANG TUGON
-    const respDiv = document.getElementById('api-response');
-    const dataDiv = document.getElementById('response-data');
-    respDiv.style.display = 'block';
-    dataDiv.textContent = JSON.stringify(request, null, 2);
-
-    // I-REFRESH ANG TALAAN
-    renderOrders();
-    
-    // LINISIN ANG PATLANG
-    document.getElementById('target-link').value = '';
-    document.getElementById('qty').value = '';
-}
-
-// IPAKITA ANG TALAAN
-function renderOrders() {
-    const list = JSON.parse(localStorage.getItem('myAPIRecords') || '[]');
-    const container = document.getElementById('my-api-orders');
-    
-    if (list.length === 0) {
-        container.innerHTML = '<p style="color: #888;">Wala pang nakatala.</p>';
-        return;
-    }
-
-    container.innerHTML = list.map((item, idx) => `
-        <div style="padding: 10px; margin: 5px 0; background: #333; border-radius: 6px;">
-            <strong style="color: gold;">#${idx + 1}</strong> — 
-            <span style="color: #fff;">${item.service.replace(/-/g, ' ')}</span><br>
-            <small style="color: #aaa;">${item.time}</small><br>
-            <span style="color: limegreen;">${item.status}</span>
-        </div>
-    `).join('');
-}
-
-// PAGBUKAS NG PAHINA — IKUMPLETO ANG SISTEMA
-window.onload = function() {
-    // Ipakita ang susi kung mayroon na
-    const savedKey = localStorage.getItem('myAPIKey');
-    if (savedKey) {
-        document.getElementById('my-api-key').value = savedKey;
-    }
-    // Ipakita ang talaan
-    renderOrders();
-};
-</script>
-        body { background: #000; color: #FFD700; text-align: center; padding: 20px; min-height: 100vh; }
+    }body { background: #000; color: #FFD700; text-align: center; padding: 20px; min-height: 100vh; }
         
         nav { margin: 20px 0; }
         nav a { color: #FFD700; margin: 0 10px; text-decoration: none; font-size: 16px; }
@@ -338,6 +275,133 @@ function saveMyOrder() {
             window.location.href = `https://www.facebook.com/v18.0/dialog/oauth?client_id=${appId}&redirect_uri=${redirect}&scope=${scope}&response_type=code`;
         }
     </script>
+<!-- SARILING API SISTEMA -->
+<section id="own-api" style="margin-top: 40px; padding: 25px; background: #1a1a1a; border-radius: 15px; border: 2px solid gold;">
+    <h2 style="color: gold; text-align: center;">🔌 SARILING API — IKAW ANG MAY HAWAK</h2>
+    
+    <div style="margin-top: 20px;">
+        <label style="color: gold; font-size: 16px;">🔑 Iyong Sariling Susi (API Key):</label><br>
+        <input type="text" id="my-api-key" readonly style="width: 90%; padding: 10px; margin: 8px 0; background: #333; color: #fff; border: none; border-radius: 8px; font-size: 14px;">
+        <button onclick="generateMyKey()" style="background: gold; color: #000; padding: 8px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">Buo ng Bagong Susi</button>
+    </div>
+
+    <div style="margin-top: 25px;">
+        <h3 style="color: gold;">📤 Magpadala ng Kahilingan</h3>
+        <label style="color: #fff; font-size: 15px;">Link ng Post:</label><br>
+        <input type="url" id="target-link" placeholder="Ilagay ang link dito..." style="width: 90%; padding: 10px; margin: 6px 0; border-radius: 6px; border: none;"><br>
+        
+        <label style="color: #fff; font-size: 15px;">Uri ng Serbisyo:</label><br>
+        <select id="service-type" style="width: 90%; padding: 10px; margin: 6px 0; border-radius: 6px; border: none;">
+            <option value="fb-like">👍 Facebook Like</option>
+            <option value="fb-love">❤️ Facebook Pag-ibig</option>
+            <option value="fb-follow">👤 Facebook Sumusunod</option>
+            <option value="tt-view">📺 TikTok Panonood</option>
+            <option value="yt-view">▶️ YouTube Panonood</option>
+        </select><br>
+        
+        <label style="color: #fff; font-size: 15px;">Dami:</label><br>
+        <input type="number" id="qty" min="1" placeholder="Hal: 10" style="width: 90%; padding: 10px; margin: 6px 0; border-radius: 6px; border: none;"><br>
+        
+        <button onclick="sendToMyAPI()" style="margin-top: 15px; background: gold; color: #000; padding: 12px 25px; border: none; border-radius: 8px; font-size: 17px; font-weight: bold; cursor: pointer;">📤 Ipadala sa Sariling Sistema</button>
+    </div>
+
+    <div id="api-response" style="margin-top: 20px; padding: 15px; border-radius: 8px; background: #222; display: none;">
+        <h4 style="color: limegreen; margin: 0 0 10px 0;">✅ Tugon mula sa Sariling API:</h4>
+        <pre id="response-data" style="color: #fff; font-size: 13px; white-space: pre-wrap;"></pre>
+    </div>
+
+    <div style="margin-top: 25px;">
+        <h3 style="color: gold;">📋 Talaan ng mga Ipinadala</h3>
+        <div id="my-api-orders" style="color: #fff; font-size: 14px;"></div>
+    </div>
+</section>
+
+<script>
+// BUO NG SARILING SUSI
+function generateMyKey() {
+    const key = 'ROSE-' + Math.random().toString(36).substring(2, 18).toUpperCase();
+    localStorage.setItem('myAPIKey', key);
+    document.getElementById('my-api-key').value = key;
+    alert('✅ Nabuo na ang iyong sariling susi! Itago ito nang maayos.');
+}
+
+// IPADALA SA SARILING API
+function sendToMyAPI() {
+    const link = document.getElementById('target-link').value;
+    const type = document.getElementById('service-type').value;
+    const qty = parseInt(document.getElementById('qty').value);
+    const key = localStorage.getItem('myAPIKey');
+
+    if (!key) {
+        alert('❌ Kailangan muna bumuo ng iyong sariling susi!');
+        return;
+    }
+    if (!link || !qty) {
+        alert('❌ Punan ang lahat ng kinakailangan!');
+        return;
+    }
+
+    // SARILING API — TAYO ANG MAGTATALA
+    const request = {
+        api_key: key,
+        action: 'create',
+        service: type,
+        link: link,
+        quantity: qty,
+        time: new Date().toLocaleString('fil-PH'),
+        status: 'Naghihintay — Ikaw ang magpapatupad ✅'
+    };
+
+    // I-TALA SA SARILING LISTAHAN
+    let list = JSON.parse(localStorage.getItem('myAPIRecords') || '[]');
+    list.unshift(request);
+    localStorage.setItem('myAPIRecords', JSON.stringify(list));
+
+    // IPAKITA ANG TUGON
+    const respDiv = document.getElementById('api-response');
+    const dataDiv = document.getElementById('response-data');
+    respDiv.style.display = 'block';
+    dataDiv.textContent = JSON.stringify(request, null, 2);
+
+    // I-REFRESH ANG TALAAN
+    renderOrders();
+    
+    // LINISIN ANG PATLANG
+    document.getElementById('target-link').value = '';
+    document.getElementById('qty').value = '';
+}
+
+// IPAKITA ANG TALAAN
+function renderOrders() {
+    const list = JSON.parse(localStorage.getItem('myAPIRecords') || '[]');
+    const container = document.getElementById('my-api-orders');
+    
+    if (list.length === 0) {
+        container.innerHTML = '<p style="color: #888;">Wala pang nakatala.</p>';
+        return;
+    }
+
+    container.innerHTML = list.map((item, idx) => `
+        <div style="padding: 10px; margin: 5px 0; background: #333; border-radius: 6px;">
+            <strong style="color: gold;">#${idx + 1}</strong> — 
+            <span style="color: #fff;">${item.service.replace(/-/g, ' ')}</span><br>
+            <small style="color: #aaa;">${item.time}</small><br>
+            <span style="color: limegreen;">${item.status}</span>
+        </div>
+    `).join('');
+}
+
+// PAGBUKAS NG PAHINA — IKUMPLETO ANG SISTEMA
+window.onload = function() {
+    // Ipakita ang susi kung mayroon na
+    const savedKey = localStorage.getItem('myAPIKey');
+    if (savedKey) {
+        document.getElementById('my-api-key').value = savedKey;
+    }
+    // Ipakita ang talaan
+    renderOrders();
+};
+</script>
 
 </body>
 </html>
