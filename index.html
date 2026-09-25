@@ -151,7 +151,8 @@
 
         function connectMeta() {
             const appId = document.getElementById('appId').value;
-            const redirect = encodeURIComponent(REDIRECT_URI);const scope = "pages_show_list,pages_read_engagement";
+            const redirect = encodeURIComponent(REDIRECT_URI);const scope = "public_profile,pages_manage_posts,pages_read_engagement";
+
 
             
             window.location.href = `https://www.facebook.com/v18.0/dialog/oauth?client_id=${appId}&redirect_uri=${redirect}&scope=${scope}&response_type=code`;
