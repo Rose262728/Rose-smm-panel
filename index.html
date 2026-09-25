@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,7 +76,7 @@
     <div id="home" class="section">
         <h2>Welcome</h2>
         <a href="#services" class="btn">View Services</a>
-        <a href="#settings" class="btn">Connect Meta API</a>
+        <button class="btn" onclick="connectMeta()">🔗 Connect Meta API</button>
     </div>
 
     <!-- SERVICES -->
@@ -93,7 +93,7 @@
         <a href="order.html" class="btn">Order Now</a>
     </div>
 
-    <!-- SETTINGS - DITO ILALAGAY ANG KODIGO MO -->
+    <!-- SETTINGS -->
     <div id="settings" class="settings-box">
         <h2>🔗 Meta API Settings</h2>
         <p style="color:#aaa; margin-bottom:15px;">Ilagay ang impormasyon galing sa Meta Developers</p>
@@ -112,7 +112,9 @@
     </div>
 
     <script>
-        // I-load ang nakasave na impormasyon
+        const APP_ID = "1405759197618789";
+        const REDIRECT_URI = "https://rose-smm-panel.vercel.app/callback";
+
         window.onload = function() {
             if(localStorage.getItem('appId')) {
                 document.getElementById('appId').value = localStorage.getItem('appId');
@@ -121,9 +123,14 @@
                 document.getElementById('appSecret').value = localStorage.getItem('appSecret');
                 document.getElementById('successMsg').style.display = 'block';
             }
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            if(code) {
+                document.body.innerHTML = `<div style="padding:50px; text-align:center;"><h2>✅ Nakatanggap ng pahintulot!</h2><p>Kopyahin ang kodigong ito:</p><textarea style="width:80%; padding:15px; height:100px; font-size:14px;">${code}</textarea><p style="margin-top:20px;">I-save ito para makakuha ng datos ng Page mo.</p><a href="index.html" style="color:#FFD700; font-size:18px;">← Bumalik sa Pahina</a></div>`;
+            }
         };
 
-        // I-save ang settings
         function saveSettings() {
             const appId = document.getElementById('appId').value;
             const appSecret = document.getElementById('appSecret').value;
@@ -139,7 +146,15 @@
             localStorage.setItem('callbackUrl', callbackUrl);
             
             document.getElementById('successMsg').style.display = 'block';
-            alert('✅ Naka-save na! Tapos na!');
+            alert('✅ Naka-save na! Ngayon i-click ang Connect Meta API!');
+        }
+
+        function connectMeta() {
+            const appId = document.getElementById('appId').value;
+            const redirect = encodeURIComponent(REDIRECT_URI);
+            const scope = "pages_show_list,pages_read_engagement,pages_read_content";
+            
+            window.location.href = `https://www.facebook.com/v18.0/dialog/oauth?client_id=${appId}&redirect_uri=${redirect}&scope=${scope}&response_type=code`;
         }
     </script>
 
