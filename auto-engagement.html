@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ AUTO ENGAGEMENT ✨</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #0f0f0f;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            padding: 20px 15px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        h1 { color: gold; text-align: center; margin-bottom: 5px; font-size: 24px; }
+        h2 { color: #87CEEB; font-size: 15px; text-align: center; margin-bottom: 25px; font-weight: normal; }
+        
+        .box {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid gold;
+        }
+        .warning {
+            background: #2b2200;
+            border-color: #ffcc00;
+        }
+        .danger {
+            background: #330000;
+            border-color: #ff4444;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px 0;
+            color: #ffdd44;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #333;
+            color: white;
+            font-size: 15px;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            background: gold;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:disabled { background: #555; cursor: not-allowed; }
+        .status { margin-top: 15px; padding: 12px; border-radius: 6px; background: #222; min-height: 45px; }
+        .ok { color: #0f0; }
+        .warn { color: #ffcc00; }
+        .risk { color: #ff6600; }
+        .list { margin-top: 20px; }
+        .list-item {
+            padding: 10px;
+            margin: 5px 0;
+            background: #2a2a2a;
+            border-radius: 5px;
+        }
+        ol { padding-left: 22px; margin-top: 10px; }
+        li { margin: 8px 0; }
+        .note { font-size: 13px; color: #aaa; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+<h1>✨ AUTO ENGAGEMENT ✨</h1>
+<h2>Sariling Sistema • Ikaw ang May Hawak • Ligtas</h2>
+
+<div class="box warning">
+    <h3>⚠️ BALANSENG PAGLAGO</h3>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+        <li>✅ <b>20–50</b> bawat araw — Pinakaligtas ✅</li>
+        <li>✅ Hanggang <b>100–200</b> bawat araw — Mag-ingat ⚠️</li>
+        <li>⚠️ <b>200–500</b> — Mataas na panganib, siguraduhin ang tamang agwat ⚠️</li>
+        <li>❌ <b>Higit sa 500</b> — Hindi inirerekomenda ❌</li>
+        <li style="margin-top: 10px; color:#87CEEB;">💡 <b>Mas mabilis na paglago:</b> Ibahagi sa Grupo + Gawing Pampubliko — doon talaga dumarami nang kusa!</li>
+    </ul>
+</div>
+
+<div class="box">
+    <h3>🎯 ILAGAY ANG DETALYE</h3>
+    
+    <label>Link ng Post sa Facebook:</label>
+    <input type="url" id="postLink" placeholder="https://facebook.com/...">
+    
+    <label>Bilang (Hanggang 500):</label>
+    <input type="number" id="bilang" min="1" max="500" value="30">
+    <p class="note">Pinakaligtas: 30–100 lang muna</p>
+    
+    <label>Pagitan sa bawat isa (segundo):</label>
+    <input type="number" id="antala" min="10" max="600" value="45">
+    <p class="note">Mas matagal = mas ligtas (45–90 segundo)</p>
+    
+    <button id="btnSimula" onclick="simula()">✅ SIMULAN NA</button>
+    
+    <div class="status" id="kalagayan">Handa na — ilagay ang detalye sa itaas</div>
+    
+    <div class="list" id="listahan" style="display:none;">
+        <h3>📋 GAGAWIN NGAYON:</h3>
+        <div id="mgaGawin"></div>
+    </div>
+</div>
+
+<div class="box">
+    <h3>📝 GANITO ANG GAGAWIN:</h3>
+    <ol>
+        <li>Mag-log in sa Facebook gamit ang <b>pang-subok na account</b></li>
+        <li>Pindutin ang <b>SIMULAN NA</b></li>
+        <li>Bubukas ang link → <b>IKAW</b> ang magki-click ng Like ❤️</li>
+        <li>Isara ang tab → maghihintay bago susunod</li>
+        <li>Ulitin hanggang matapos</li>
+        <li>💡 <b>Para mas dumami nang kusa:</b> Ibahagi sa Grupo + Gawing Pampubliko + Mag-post sa tamang oras!</li>
+    </ol>
+</div>
+
+<script>
+let tumatakbo = false;
+
+function simula() {
+    if (tumatakbo) return;
+    
+    const link = document.getElementById('postLink').value.trim();
+    const bilang = parseInt(document.getElementById('bilang').value);
+    const antala = parseInt(document.getElementById('antala').value) * 1000;
+    const kalagayan = document.getElementById('kalagayan');
+    const listahan = document.getElementById('listahan');
+    const mgaGawin = document.getElementById('mgaGawin');
+    const btn = document.getElementById('btnSimula');
+    
+    if (!link) {
+        kalagayan.innerHTML = '<span class="warn">⚠️ Ilagay ang link ng post!</span>';
+        return;
+    }
+    if (bilang > 500) {
+        kalagayan.innerHTML = '<span style="color:#ff4444">❌ 500 ang pinakamataas!</span>';
+        return;
+    }
+    if (bilang > 200) {
+        const kumpirma = confirm(`MATAAS NA PANGANIB: ${bilang} ay napakarami na. Mas ligtas ang 50-100 lang. Sigurado ka ba? Maaaring mawala ang account.`);
+        if (!kumpirma) return;
+    } else if (bilang > 100) {
+        const kumpirma = confirm(`Babala: ${bilang} ay marami na. Inirerekomenda: 50-100 lang. Sigurado ka ba?`);
+        if (!kumpirma) return;
+    }
+    
+    tumatakbo = true;
+    btn.disabled = true;
+    kalagayan.innerHTML = '<span class="warn">⏳ Nagsisimula na... Huwag magmadali</span>';
+    
+    listahan.style.display = 'block';
+    mgaGawin.innerHTML = '';
+    for (let i = 1; i <= bilang; i++) {
+        mgaGawin.innerHTML += `
+            <div class="list-item" id="hakbang${i}">
+                ${i}. <a href="${link}" target="_blank" rel="noopener">Buksan ang Link</a> → I-like → Isara
+            </div>
+        `;
+    }
+    
+    let naBukas = 0;
+    const panahon = setInterval(() => {
+        naBukas++;
+        if (naBukas > bilang) {
+            clearInterval(panahon);
+            tumatakbo = false;
+            btn.disabled = false;
+            kalagayan.innerHTML = '<span class="ok">✅ TAPOS NA! Magpahinga — bukas na ulit. Ibahagi rin sa Grupo para mas dumami nang kusa!</span>';
+            return;
+        }
+        window.open(link, '_blank');
+        kalagayan.innerHTML = `<span class="ok">✅ Bukas na ${naBukas} sa ${bilang} — I-like at isara</span>`;
+        document.getElementById(`hakbang${naBukas}`).style.background = '#003300';
+    }, antala);
+}
+</script>
+
+</body>
+  </html>
+  
