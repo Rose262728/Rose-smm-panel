@@ -7,7 +7,7 @@ export const PROVIDER = {
 // --- TELEGRAM ALERT ---
 export const TELEGRAM = {
   botToken:8955708822:AAG5YzaswXH78ci5u652W
-  chatId: "ILAGAY-ANG-CHAT-ID-MO-DITO"
+  chatId:8955708822
 };
 
 export async function sendTelegramNotification(order) {
