@@ -36,3 +36,21 @@ export async function createProviderOrder(order) {
   apiUrl: "https://smmvaly.com/api/v2",
   apiKey:e6f4bf6d1e779574a2deec8f8e9c2a36
 };
+// --- TELEGRAM ALERT ---
+export const TELEGRAM = {
+  botToken: "ILAGAY-ANG-TOKEN-MO",
+  chatId: "ILAGAY-ANG-ID-MO"
+};
+
+export async function sendTelegramNotification(order) {
+  const { botToken, chatId } = TELEGRAM;
+  const text = `📩 BAGONG ORDER!
+🔗 Link: ${order.link}
+🔢 Dami: ${order.quantity}`;
+
+  return fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({chat_id: chatId, text: text})
+  });
+  }
