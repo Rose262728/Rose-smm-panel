@@ -1,3 +1,28 @@
+export const PROVIDER = {
+  name: "SMMValy",
+  apiUrl: "https://smmvaly.com/api/v2",
+  apiKey: "e6f4bf6d1e779574a2deec8f8e9c2a36"
+};
+
+// --- TELEGRAM ALERT ---
+export const TELEGRAM = {
+  botToken: "ILAGAY-ANG-TOKEN-MO-DITO",
+  chatId: "ILAGAY-ANG-CHAT-ID-MO-DITO"
+};
+
+export async function sendTelegramNotification(order) {
+  const { botToken, chatId } = TELEGRAM;
+  const text = `📩 BAGONG ORDER!
+🔗 Link: ${order.link}
+🔢 Dami: ${order.quantity}`;
+
+  return fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({chat_id: chatId, text: text})
+  });
+}
+
 export async function createProviderOrder(order) {
   const { apiUrl, apiKey } = PROVIDER;
 
@@ -13,11 +38,14 @@ export async function createProviderOrder(order) {
     const data = await res.json();
 
     if (data.order) {
+      
+      await sendTelegramNotification(order);
+
       return {
         success: true,
         status: "PENDING",
         providerOrderId: String(data.order),
-        message: "✅ Order naipadala!",
+        message: "✅ Order naipadala! Nakatanggap ka sa Telegram.",
         order: order
       };
     } else {
@@ -28,29 +56,10 @@ export async function createProviderOrder(order) {
       };
     }
   } catch (err) {
-    return { success: false, message: "Koneksyon mali: " + err.message, order: order };
+    return { 
+      success: false, 
+      message: "Koneksyon mali: " + err.message, 
+      order: order 
+    };
   }
 }
-
-  name: "SMMValy",
-  apiUrl: "https://smmvaly.com/api/v2",
-  apiKey:e6f4bf6d1e779574a2deec8f8e9c2a36
-};
-// --- TELEGRAM ALERT ---
-export const TELEGRAM = {
-  botToken: "ILAGAY-ANG-TOKEN-MO",
-  chatId: "ILAGAY-ANG-ID-MO"
-};
-
-export async function sendTelegramNotification(order) {
-  const { botToken, chatId } = TELEGRAM;
-  const text = `📩 BAGONG ORDER!
-🔗 Link: ${order.link}
-🔢 Dami: ${order.quantity}`;
-
-  return fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({chat_id: chatId, text: text})
-  });
-  }
