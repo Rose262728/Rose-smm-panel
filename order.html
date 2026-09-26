@@ -1,250 +1,220 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- ==============================================
+   ROSE SMM PANEL — FINAL VERSION
+   Maganda, Kumpleto, Gumagana!
+   ============================================== -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
-    <title>ROSE SMM PANEL - Order</title>
+body {
+  background: #000;
+  color: #ffd700;
+  padding: 20px 15px;
+  min-height: 100vh;
+}
 
-    <link rel="stylesheet" href="style.css">
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+}
 
-    <style>
-        body {
-            background: black;
-            color: gold;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px 15px;
-            margin: 0;
-        }
+h1 {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 5px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
 
-        h1 {
-            font-size: 42px;
-            margin-bottom: 35px;
-        }
+.subtitle {
+  text-align: center;
+  color: #ffeb80;
+  margin-bottom: 25px;
+  font-size: 15px;
+}
 
-        #orderForm {
-            width: 100%;
-            max-width: 650px;
-            margin: auto;
-        }
+.card {
+  background: #111;
+  border: 2px solid #ffd700;
+  border-radius: 15px;
+  padding: 25px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
 
-        input,
-        select {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 20px;
-            margin: 10px 0;
-            font-size: 20px;
-            border-radius: 12px;
-            border: 2px solid gold;
-            text-align: center;
-            background: white;
-            color: #222;
-        }
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #fff;
+}
 
-        button,
-        .btn {
-            display: block;
-            width: 100%;
-            max-width: 400px;
-            box-sizing: border-box;
-            padding: 18px;
-            margin: 20px auto;
-            font-size: 21px;
-            font-weight: bold;
-            border-radius: 12px;
-            border: none;
-            background: gold;
-            color: black;
-            text-decoration: none;
-        }
+label {
+  display: block;
+  margin: 15px 0 8px;
+  font-weight: bold;
+  color: #ffeb80;
+}
 
-        button:hover,
-        .btn:hover {
-            background: white;
-        }
+input, select {
+  width: 100%;
+  padding: 13px;
+  font-size: 16px;
+  border: 2px solid #444;
+  border-radius: 10px;
+  background: #222;
+  color: #fff;
+  outline: none;
+}
 
-        @media (max-width: 600px) {
-            body {
-                padding: 35px 15px;
-            }
+input:focus, select:focus {
+  border-color: #ffd700;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
 
-            h1 {
-                font-size: 34px;
-            }
+#btnIpadala {
+  width: 100%;
+  margin-top: 25px;
+  padding: 16px;
+  font-size: 19px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ffd700, #ffb300);
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  transition: all 0.3s ease;
+}
 
-            input,
-            select {
-                font-size: 18px;
-                padding: 18px;
-            }
+#btnIpadala:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+}
 
-            button,
-            .btn {
-                font-size: 19px;
-                padding: 17px;
-            }
-        }
-    </style>
-</head>
+#btnIpadala:active {
+  transform: scale(0.98);
+}
 
-<body>
+#btnIpadala:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+</style>
 
-    <h1>ROSE SMM PANEL</h1>
+<div class="container">
+  <h1>🌹 ROSE SMM PANEL</h1>
+  <p class="subtitle">Fast • Secure • Reliable</p>
 
-    <h2>Place Your Order</h2>
+  <div class="card">
+    <h2>📤 Magpadala ng Order</h2>
 
-    <form id="orderForm">
+    <label for="link">🔗 Link ng Post/Video:</label>
+    <input type="url" id="link" placeholder="Ilagay ang link dito...">
 
-        <input
-            type="text"
-            id="name"
-            placeholder="Your Name"
-            required
-        >
+    <label for="serbisyo">📋 Uri ng Serbisyo:</label>
+    <select id="serbisyo">
+      <option value="fb_likes">👍 Facebook Likes</option>
+      <option value="fb_heart">❤️ Heart Reaction</option>
+      <option value="fb_love">😍 Love Reaction</option>
+      <option value="fb_wow">😮 Wow Reaction</option>
+      <option value="fb_care">🤗 Care Reaction</option>
+      <option value="fb_haha">😂 Haha Reaction</option>
+      <option value="fb_sad">😢 Sad Reaction</option>
+      <option value="fb_angry">😠 Angry Reaction</option>
+      <option value="fb_followers">👤 Facebook Followers</option>
+      <option value="fb_comments">💬 Facebook Comments</option>
+      <option value="fb_shares">🔁 Facebook Shares</option>
+      <option value="fb_post_views">👁️ Post Views</option>
+      <option value="fb_video_views">▶️ Video Views</option>
+    </select>
 
-        <input
-            type="text"
-            id="link"
-            placeholder="Facebook/TikTok/YouTube/Instagram Link"
-            required
-        >
+    <label for="dami">🔢 Bilang / Dami:</label>
+    <select id="dami">
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+      <option value="200">200</option>
+      <option value="300">300</option>
+      <option value="500">500</option>
+      <option value="1000">1,000</option>
+      <option value="2000">2,000</option>
+      <option value="5000">5,000</option>
+      <option value="10000">10,000</option>
+      <option value="50000">50,000</option>
+      <option value="100000">100,000</option>
+      <option value="500000">500,000</option>
+      <option value="1000000">1,000,000</option>
+    </select>
 
-        <select id="country" required>
-            <option value="Philippines">🇵🇭 Philippines</option>
-            <option value="India">🇮🇳 India</option>
-        </select>
+    <button id="btnIpadala" onclick="ipadalaOrder()">📤 SEND ORDER</button>
+  </div>
+</div>
 
-        <select id="service" required>
+<script>
+// ==============================================
+// SERVICE ID MAP — PALITAN NG TOTOONG MULA SA SMMVALY
+// ==============================================
+const serviceMap = {
+  fb_likes: 1,        // ← Ilagay ang TOTOONG Service ID mula sa SMMValy
+  fb_heart: 2,        // ← Palitan
+  fb_love: 3,         // ← Palitan
+  fb_wow: 4,          // ← Palitan
+  fb_care: 5,         // ← Palitan
+  fb_haha: 6,         // ← Palitan
+  fb_sad: 7,          // ← Palitan
+  fb_angry: 8,        // ← Palitan
+  fb_followers: 9,    // ← Palitan
+  fb_comments: 10,    // ← Palitan
+  fb_shares: 11,      // ← Palitan
+  fb_post_views: 12,  // ← Palitan
+  fb_video_views: 13  // ← Palitan
+};
 
-            <optgroup label="Facebook Profile & Page">
-                <option value="Facebook Like">👍 Like</option>
-                <option value="Facebook Love">❤️ Love</option>
-                <option value="Facebook Care">🥰 Care</option>
-                <option value="Facebook Haha">😂 Haha</option>
-                <option value="Facebook Wow">😮 Wow</option>
-                <option value="Facebook Sad">😢 Sad</option>
-                <option value="Facebook Angry">😡 Angry</option>
-                <option value="Facebook All Reactions">❤️ All Reactions</option>
-                <option value="Facebook Followers">Followers</option>
-                <option value="Facebook Views">Views</option>
-                <option value="Facebook Comments">Comments</option>
-                <option value="Facebook Shares">Shares</option>
-                <option value="Facebook Saves">Saves</option>
-            </optgroup>
+async function ipadalaOrder() {
+  const link = document.getElementById('link').value.trim();
+  const serbisyo = document.getElementById('serbisyo').value;
+  const dami = document.getElementById('dami').value;
 
-            <optgroup label="TikTok">
-                <option value="TikTok Likes">Likes</option>
-                <option value="TikTok Followers">Followers</option>
-                <option value="TikTok Views">Views</option>
-                <option value="TikTok Shares">Shares</option>
-                <option value="TikTok Comments">Comments</option>
-                <option value="TikTok Saves">Saves</option>
-            </optgroup>
+  // Suriin kung may kulang
+  if (!link) {
+    alert("⚠️ Ilagay ang link muna!");
+    return;
+  }
 
-            <optgroup label="Telegram">
-                <option value="Telegram Members">Members</option>
-                <option value="Telegram Reactions">Reactions</option>
-                <option value="Telegram Views">Views</option>
-                <option value="Telegram Shares">Shares</option>
-                <option value="Telegram Comments">Comments</option>
-            </optgroup>
+  const serviceId = serviceMap[serbisyo];
+  if (!serviceId) {
+    alert("⚠️ Pumili ng serbisyo!");
+    return;
+  }
 
-            <optgroup label="YouTube">
-                <option value="YouTube Subscribers">Subscribers</option>
-                <option value="YouTube Likes">Likes</option>
-                <option value="YouTube Views">Views</option>
-                <option value="YouTube Comments">Comments</option>
-                <option value="YouTube Shares">Shares</option>
-            </optgroup>
+  // Pindutan — nagbabago
+  const btn = document.getElementById('btnIpadala');
+  btn.innerText = "⏰ Sending...";
+  btn.disabled = true;
 
-            <optgroup label="Instagram">
-                <option value="Instagram Followers">Followers</option>
-                <option value="Instagram Likes">Likes</option>
-                <option value="Instagram Views">Views</option>
-                <option value="Instagram Comments">Comments</option>
-                <option value="Instagram Shares">Shares</option>
-                <option value="Instagram Saves">Saves</option>
-            </optgroup>
+  // Ipadala sa SMMValy + Telegram
+  const resulta = await createProviderOrder({
+    serviceId: serviceId,
+    link: link,
+    quantity: dami
+  });
 
-        </select>
+  // Resulta
+  if (resulta.success) {
+    alert("✅ Order Sent Successfully!\nTignan ang Telegram mo!");
+    document.getElementById('link').value = ""; // Burahin ang link pagkatapos
+  } else {
+    alert("❌ Failed!\n" + resulta.message);
+  }
 
-        <input
-            type="number"
-            id="quantity"
-            placeholder="Quantity"
-            min="1"
-            required
-        >
-
-        <button type="submit">Submit Order</button>
-
-    </form>
-
-    <a href="index.html" class="btn">Back Home</a>
-
-    <script>
-        document.getElementById("orderForm").addEventListener("submit", async function(event) {
-
-            event.preventDefault();
-
-            const name = document.getElementById("name").value.trim();
-            const link = document.getElementById("link").value.trim();
-            const country = document.getElementById("country").value;
-            const service = document.getElementById("service").value;
-            const quantity = document.getElementById("quantity").value.trim();
-
-            if (!name || !link || !country || !service || !quantity) {
-                alert("Please fill in all fields.");
-                return;
-            }
-
-            try {
-
-                const response = await fetch("/api/order", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        name: name,
-                        link: link,
-                        country: country,
-                        service: service,
-                        quantity: quantity
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-
-                    alert(
-                        "Order submitted successfully!\n\n" +
-                        "Order ID: " + data.orderId
-                    );
-
-                    document.getElementById("orderForm").reset();
-
-                } else {
-
-                    alert(
-                        "Order failed: " +
-                        (data.error || "Unknown error")
-                    );
-
-                }
-
-            } catch (error) {
-
-                alert("Connection error. Please try again.");
-
-            }
-
-        });
-    </script>
-
-</body>
-</html>
+  // Balik sa dating anyo
+  btn.innerText = "📤 SEND ORDER";
+  btn.disabled = false;
+}
+</script>
