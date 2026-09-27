@@ -160,6 +160,9 @@ input:focus, select:focus {
 </div>
 
 <script>
+// ==============================================
+// SERVICE IDs — PALITAN MULA SA SMMWIZ SERVICES
+// ==============================================
 const serviceMap = {
   fb_likes: 1,
   fb_heart: 2,
@@ -176,18 +179,24 @@ const serviceMap = {
   fb_video_views: 13
 };
 
+// ==============================================
+// SMMWIZ API — NAKAKONEKTA NA!
+// ==============================================
+const PROVIDER = {
+  name: "SMMWiz",
+  apiUrl: "https://smmwiz.com/api/v2",
+  apiKey: "6fa3c97a2e40b033b1644a14741ea21b"
+};
+
+// ==============================================
+// TELEGRAM — NAKALAGAY NA ANG IYO!
+// ==============================================
+const TELEGRAM = {
+  botToken: "8955708822:AAG5YzaswXH78ci5u652WPrRBUB3Ij1rijM",
+  chatId: "8592192841"
+};
+
 async function createProviderOrder(order) {
-  const PROVIDER = {
-    name: "SMMValy",
-    apiUrl: "https://smmvaly.com/api/v2",
-    apiKey: "e6f4bf6d1e779574a2deec8f8e9c2a36"
-  };
-
-  const TELEGRAM = {
-    botToken:8955708822:AAG5YzaswXH78ci5u652WPrRBUB3Ij1rijM
-    chatId:8592192841
-  };
-
   const { apiUrl, apiKey } = PROVIDER;
   const formData = new FormData();
   formData.append('key', apiKey);
@@ -206,12 +215,12 @@ async function createProviderOrder(order) {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           chat_id: TELEGRAM.chatId,
-          text: `📤 BAGONG ORDER!\n🔗 Link: ${order.link}\n📦 Dami: ${order.quantity}`
+          text: `📤 BAGONG ORDER!\n🔗 Link: ${order.link}\n📦 Dami: ${order.quantity}\n🆔 Order #: ${data.order}`
         })
       });
-      return { success: true, message: "✅ Order Sent Successfully!" };
+      return { success: true, message: "✅ Order Sent Successfully!\nOrder No: " + data.order };
     } else {
-      return { success: false, message: "❌ " + (data.error || "Failed") };
+      return { success: false, message: "❌ " + (data.error || "Failed to send order") };
     }
   } catch (err) {
     return { success: false, message: "❌ Error: " + err.message };
@@ -256,4 +265,5 @@ async function ipadalaOrder() {
 </script>
 
 </body>
-</html>
+  </html>
+  
